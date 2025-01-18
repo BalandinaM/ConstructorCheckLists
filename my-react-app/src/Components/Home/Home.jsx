@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import { useSelector } from 'react-redux';
+import Login from "../Login/Login";
 
 const Home = () => {
 	const [isAuth, setIsAuth] = useState(false);
@@ -14,7 +15,7 @@ const Home = () => {
 	return isAuth ? (
 			<p>Список чеклистов</p>
 	) : (
-			<p>Логин</p>
+			<Login/>
 	)
 }
 

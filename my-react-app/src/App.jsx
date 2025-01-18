@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux';
 import './App.css';
-import {HashRouter, Route, Routes,} from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from './Components/Home/Home';
+import Login from './Components/Login/Login';
+import GlobalStyles from './GlobalStyles';
 // import Button from '@mui/material/Button';
 // import Container from '@mui/material/Container';
 
@@ -11,9 +13,11 @@ function App() {
 
 	return (
 		<HashRouter>
-			<Routes>
-				<Route path="/" element={<Home />} />
-			</Routes>
+			<GlobalStyles/>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+				</Routes>
 		</HashRouter>
 	);
 }
