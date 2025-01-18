@@ -20,8 +20,8 @@ const GlobalStyles = createGlobalStyle`
     sans-serif;
     font-size: 1.6rem; /* 16px */
     line-height: 1.6;
-    color: #333;
-    background-color: #fafafa;
+    color: ${props => props.theme.colors.primary};
+    background-color: ${props => props.theme.colors.background};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 		margin: 0;
