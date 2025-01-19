@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { createValidationSchema } from "../../assests/forForms/createValidationSchema";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
-import { NavLink } from "react-router-dom";
-
+import * as Yup from 'yup';
 
 const WrapForm = styled.div`
 	background-color: ${props => props.theme.colors.primarySecondary};
@@ -55,13 +53,25 @@ const ButtonSubmit = styled.button`
 	border-radius: 5px;
 `;
 
-const Login = () => {
+const SignUp = () => {
+
 	return (
 		<WrapForm>
-			<h2>Авторизация</h2>
+			<h2>Введите данные для создания учетной записи</h2>
 			<Formik
-				initialValues={{ email: "", password: "", rememberMe: false }}
-				validationSchema={createValidationSchema({ email: "", password: "", remembeMe: false })}
+				initialValues={{ email: "", password: "", confirmPassword: "" }}
+				validationSchema={
+					Yup.object({
+						email: Yup.string().email('Неверный формат email').required('Email обязателен'),
+						password: Yup.string()
+							.min(6, 'Минимум 6 символов')
+							.max(20, 'Максимум 20 символов')
+							.required('Пароль обязателен'),
+						confirmPassword: Yup.string()
+							.oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
+							.required('Подтверждение пароля обязательно'),
+					})
+				}
 				onSubmit={HandleFormSubmit}
 			>
 				{({ errors, touched, isSubmitting }) => (
@@ -84,19 +94,23 @@ const Login = () => {
 							/>
 							<ErrorMessageBox name="password" component="div" />
 						</InputWrap>
-						<InputWrap $gap="15px">
-							<label htmlFor="rememberme">Запомнить меня</label>
-							<Field type="checkbox" name="rememberMe" />
+						<InputWrap>
+							<LabelTextField htmlFor="confirmPassword">Повторите пароль</LabelTextField>
+							<TextField
+								type="password"
+								name="confirmPassword"
+								isinvalid={errors.confirmPassword && touched.confirmPassword ? "true" : "false"}
+							/>
+							<ErrorMessageBox name="confirmPassword" component="div" />
 						</InputWrap>
 						<ButtonSubmit type="submit" disabled={isSubmitting}>
-							Авторизоваться
+							Зарегистрироваться
 						</ButtonSubmit>
 					</FormLogin>
 				)}
 			</Formik>
-			<NavLink to="/signup">Впервые? Тогда зарегистрируйтесь.</NavLink>
 		</WrapForm>
 	);
 };
 
-export default Login;
+export default SignUp;
