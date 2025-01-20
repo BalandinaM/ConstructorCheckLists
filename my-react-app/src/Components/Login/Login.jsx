@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { createValidationSchema } from "../../assests/forForms/createValidationSchema";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 import { NavLink } from "react-router-dom";
+import { Wrapper } from "../../Elements/Wrapper";
 
 
 const WrapForm = styled.div`
@@ -10,6 +11,7 @@ const WrapForm = styled.div`
 	box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 	width: 500px;
 	height: auto;
+	margin: 0 auto;
 	padding: 30px;
 	border-radius: 2%;
 `;
@@ -57,45 +59,47 @@ const ButtonSubmit = styled.button`
 
 const Login = () => {
 	return (
-		<WrapForm>
-			<h2>Авторизация</h2>
-			<Formik
-				initialValues={{ email: "", password: "", rememberMe: false }}
-				validationSchema={createValidationSchema({ email: "", password: "", remembeMe: false })}
-				onSubmit={HandleFormSubmit}
-			>
-				{({ errors, touched, isSubmitting }) => (
-					<FormLogin>
-						<InputWrap>
-							<LabelTextField htmlFor="email">Адрес электронной почты</LabelTextField>
-							<TextField
-								type="email"
-								name="email"
-								isinvalid={errors.email && touched.email ? "true" : "false"}
-							/>
-							<ErrorMessageBox name="email" component="div" />
-						</InputWrap>
-						<InputWrap>
-							<LabelTextField htmlFor="password">Пароль</LabelTextField>
-							<TextField
-								type="password"
-								name="password"
-								isinvalid={errors.password && touched.password ? "true" : "false"}
-							/>
-							<ErrorMessageBox name="password" component="div" />
-						</InputWrap>
-						<InputWrap $gap="15px">
-							<label htmlFor="rememberme">Запомнить меня</label>
-							<Field type="checkbox" name="rememberMe" />
-						</InputWrap>
-						<ButtonSubmit type="submit" disabled={isSubmitting}>
-							Авторизоваться
-						</ButtonSubmit>
-					</FormLogin>
-				)}
-			</Formik>
-			<NavLink to="/signup">Впервые? Тогда зарегистрируйтесь.</NavLink>
-		</WrapForm>
+		<Wrapper>
+			<WrapForm>
+				<h2>Авторизация</h2>
+				<Formik
+					initialValues={{ email: "", password: "", rememberMe: false }}
+					validationSchema={createValidationSchema({ email: "", password: "", remembeMe: false })}
+					onSubmit={HandleFormSubmit}
+				>
+					{({ errors, touched, isSubmitting }) => (
+						<FormLogin>
+							<InputWrap>
+								<LabelTextField htmlFor="email">Адрес электронной почты</LabelTextField>
+								<TextField
+									type="email"
+									name="email"
+									isinvalid={errors.email && touched.email ? "true" : "false"}
+								/>
+								<ErrorMessageBox name="email" component="div" />
+							</InputWrap>
+							<InputWrap>
+								<LabelTextField htmlFor="password">Пароль</LabelTextField>
+								<TextField
+									type="password"
+									name="password"
+									isinvalid={errors.password && touched.password ? "true" : "false"}
+								/>
+								<ErrorMessageBox name="password" component="div" />
+							</InputWrap>
+							<InputWrap $gap="15px">
+								<label htmlFor="rememberme">Запомнить меня</label>
+								<Field type="checkbox" name="rememberMe" />
+							</InputWrap>
+							<ButtonSubmit type="submit" disabled={isSubmitting}>
+								Авторизоваться
+							</ButtonSubmit>
+						</FormLogin>
+					)}
+				</Formik>
+				<NavLink to="/signup">Впервые? Тогда зарегистрируйтесь.</NavLink>
+			</WrapForm>
+		</Wrapper>
 	);
 };
 
