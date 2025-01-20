@@ -25,8 +25,8 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 		margin: 0;
-  	display: flex;
-  	place-items: center;
+  	/* display: flex;
+  	place-items: center; */
   	min-width: 320px;
   	min-height: 100vh;
   }
