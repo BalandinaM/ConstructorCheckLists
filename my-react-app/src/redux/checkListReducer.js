@@ -5,6 +5,7 @@ const initialState = {
 		{
 			id: "1",
 			title: "Подготовка документов",
+			description: "Какие документы необходимо подготовить или проверить наличие, перед поездкой",
 			tasksData: [
 				{
 					idTask: "11",
@@ -31,6 +32,7 @@ const initialState = {
 		{
 			id: "2",
 			title: "Сбор багажа",
+			description: "Что положить в чемоданы",
 			tasksData: [
 				{
 					idTask: "21",
@@ -62,6 +64,7 @@ const initialState = {
 		{
 			id: "3",
 			title: "Выход из дома",
+			description: "Что необходимо проверить непосредственно перед выходом из дома на такси",
 			tasksData: [
 				{
 					idTask: "31",
@@ -88,6 +91,7 @@ const initialState = {
 		{
 			id: "4",
 			title: "Прочее важное перед отъездом",
+			description: "По мелочи, но ОЧЕНЬ важно",
 			tasksData: [
 				{
 					idTask: "41",
