@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-//import './App.css';
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
@@ -23,8 +21,6 @@ const BodyContainer = styled.div`
 `
 
 function App() {
-	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
-	console.log(arrCheckLists);
 
 	return (
 		<HashRouter>

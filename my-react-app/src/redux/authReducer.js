@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-	id: null,
-	email: null,
-	name: null,
-	isAuth: false,
-};
-
 // const initialState = {
-//     id: 123,
-//     email: 'name@mail.ru',
-//     name: 'Ефросинья Аксенова',
-//     isAuth: true,
+// 	id: null,
+// 	email: null,
+// 	name: null,
+// 	isAuth: false,
 // };
+
+const initialState = {
+    id: 123,
+    email: 'name@mail.ru',
+    name: 'Ефросинья Аксенова',
+    isAuth: true,
+};
 
 export const authReducer = createSlice({
     name: 'auth',
