@@ -23,14 +23,19 @@ const List = styled.ul`
 
 const Item = styled.li`
 	width: 100%;
-	border: 2px solid blue;
+	padding: 15px;
 	aspect-ratio: 1 / 1;
+	background-color: ${(props) => props.theme.colors.primarySecondary};
+	box-shadow: 0px 5px 3px 1px rgba(0, 62, 100, 0.23);
 `;
 
 const NavLinkCustom = styled(NavLink)`
-	display: block;
 	width: 100%;
 	height: 100%;
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+	gap: 16px;
 `;
 
 const Pagination = styled.ul`
@@ -49,14 +54,44 @@ const ItemPagination = styled.li`
 	border: 2px solid yellow;
 `;
 
+const ItemStatic = styled(Item)`
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: ${(props) => props.theme.colors.primary};
+`;
+
+const ImgWrap = styled.div`
+	width: 110px;
+	height: 110px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: ${(props) => props.theme.colors.primarySecondary};
+	border-radius: 50%;
+`;
+
+const ItemTitle = styled.h3`
+	//margin-bottom: 16px;
+	height: 50px;
+`;
+
+const ItemText = styled.p`
+	font-size: 1.2rem;
+	flex-grow: 1;
+`
+
 const ListCheckLists= () => {
 	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
 	console.log(arrCheckLists);
 
 	const staticElement = (
-    <Item key="new-checklist-link">
-      <p>Сюда надо добавить ссылку на создание нового чеклиста</p>
-    </Item>
+    <ItemStatic key="new-checklist-link">
+      <ImgWrap>
+				<img src="./image/icon_add_1.png" alt="Добавить новую запись" width={70} height={70} />
+			</ImgWrap>
+    </ItemStatic>
   );
 
 
@@ -68,8 +103,8 @@ const ListCheckLists= () => {
         arrCheckLists.map((elem) => (
 					<Item key={elem.id}>
 						<NavLinkCustom to={`/checklist/${elem.id}`}>
-							<h3>{elem.title}</h3>
-							<p>{elem.description}</p>
+							<ItemTitle>{elem.title}</ItemTitle>
+							<ItemText>{elem.description}</ItemText>
 						</NavLinkCustom>
 					</Item>
 				))
