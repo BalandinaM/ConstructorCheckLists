@@ -41,7 +41,7 @@ const NavLinkCustom = styled(NavLink)`
 const Pagination = styled.ul`
 	display: flex;
 	flex-direction: row;
-	gap: 5px;
+	gap: 15px;
 	align-self: center;
 `;
 
@@ -51,7 +51,13 @@ const ItemPagination = styled.li`
 	align-items: center;
 	width: 30px;
 	height: 30px;
-	border: 2px solid yellow;
+	box-shadow: 1px 2px 3px 0px rgba(0, 62, 100, 0.23);
+	background-color: ${(props) => props.theme.colors.primarySecondary};
+	color: rgba(0, 62, 100, 0.5);// потом прописать в зависимости от входящих пропсов,активная страница - темный цвет
+
+	&:hover {
+		transform: scale(1.1);
+	}
 `;
 
 const ItemStatic = styled(Item)`
@@ -73,14 +79,41 @@ const ImgWrap = styled.div`
 `;
 
 const ItemTitle = styled.h3`
-	//margin-bottom: 16px;
 	height: 50px;
 `;
 
 const ItemText = styled.p`
 	font-size: 1.2rem;
 	flex-grow: 1;
-`
+`;
+
+const Button = styled.button`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	height: 30px;
+	background-color: ${(props) => props.theme.colors.primarySecondary};
+	border-radius: 50%;
+	box-shadow: 1px 2px 3px 0px rgba(0, 62, 100, 0.23);
+
+	&:hover {
+		transform: scale(1.1);
+	}
+`;
+
+const ButtonLeft = styled(Button)`
+	& img {
+		transform: rotate(45deg);
+	}
+`;
+
+const ButtonRight = styled(Button)`
+	& img {
+		transform: rotate(225deg);
+	}
+`;
+
 
 const ListCheckLists= () => {
 	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
@@ -111,10 +144,16 @@ const ListCheckLists= () => {
       )}
 			</List>
 			<Pagination>
+				<ButtonLeft>
+					<img src="./image/icon_arrow.png" width={10} height={10} />
+				</ButtonLeft>
 				<ItemPagination>1</ItemPagination>
 				<ItemPagination>2</ItemPagination>
 				<ItemPagination>3</ItemPagination>
 				<ItemPagination>4</ItemPagination>
+				<ButtonRight>
+					<img src="./image/icon_arrow.png" width={10} height={10} />
+				</ButtonRight>
 			</Pagination>
 		</ListCheckListsWrapper>
 	)
