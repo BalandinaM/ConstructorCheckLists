@@ -51,13 +51,14 @@ const IconWrap = styled.div`
 `;
 
 const ImgWrap = styled(IconWrap)`
-	margin-right: ${(props) => (props.$authToken === "true" ? "auto" : null )};;
+	//margin-right: ${(props) => (props.$authToken === "true" ? "auto" : null )};
+	margin-right: 20px;
 `;
 
 const TitleHeader = styled.h2`
 	font-size: 3.2rem;
 	font-weight: 700;
-	margin: ${(props) => (props.$authToken === "true" ? null : "0 361px 0 300px" )};
+	margin-right: ${(props) => (props.$authToken === "true" ? null : "auto" )};
 `;
 
 const UserWrap = styled.div`
