@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import './Pagination.css';
 import styled from "styled-components";
 import { Wrapper } from "../../Elements/Wrapper";
 import { useSelector } from "react-redux";
@@ -38,28 +41,6 @@ const NavLinkCustom = styled(NavLink)`
 	gap: 16px;
 `;
 
-const Pagination = styled.ul`
-	display: flex;
-	flex-direction: row;
-	gap: 15px;
-	align-self: center;
-`;
-
-const ItemPagination = styled.li`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 30px;
-	height: 30px;
-	box-shadow: 1px 2px 3px 0px rgba(0, 62, 100, 0.23);
-	background-color: ${(props) => props.theme.colors.primarySecondary};
-	color: rgba(0, 62, 100, 0.5);// потом прописать в зависимости от входящих пропсов,активная страница - темный цвет
-
-	&:hover {
-		transform: scale(1.1);
-	}
-`;
-
 const ItemStatic = styled(Item)`
 	border: none;
 	display: flex;
@@ -87,37 +68,25 @@ const ItemText = styled.p`
 	flex-grow: 1;
 `;
 
-const Button = styled.button`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 30px;
-	height: 30px;
-	background-color: ${(props) => props.theme.colors.primarySecondary};
-	border-radius: 50%;
-	box-shadow: 1px 2px 3px 0px rgba(0, 62, 100, 0.23);
-
-	&:hover {
-		transform: scale(1.1);
-	}
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 `;
-
-const ButtonLeft = styled(Button)`
-	& img {
-		transform: rotate(45deg);
-	}
-`;
-
-const ButtonRight = styled(Button)`
-	& img {
-		transform: rotate(225deg);
-	}
-`;
-
 
 const ListCheckLists= () => {
 	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
 	console.log(arrCheckLists);
+	const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 11;
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * pageSize;
+  const currentItems = arrCheckLists.slice(offset, offset + pageSize);
+  const pageCount = Math.ceil(arrCheckLists.length / pageSize);
 
 	const staticElement = (
     <ItemStatic key="new-checklist-link">
@@ -133,7 +102,7 @@ const ListCheckLists= () => {
 			<Title>Список чеклистов</Title>
 			<List>
 			{[staticElement].concat(
-        arrCheckLists.map((elem) => (
+        currentItems.map((elem) => (
 					<Item key={elem.id}>
 						<NavLinkCustom to={`/checklist/${elem.id}`}>
 							<ItemTitle>{elem.title}</ItemTitle>
@@ -143,18 +112,21 @@ const ListCheckLists= () => {
 				))
       )}
 			</List>
-			<Pagination>
-				<ButtonLeft>
-					<img src="./image/icon_arrow.png" width={10} height={10} />
-				</ButtonLeft>
-				<ItemPagination>1</ItemPagination>
-				<ItemPagination>2</ItemPagination>
-				<ItemPagination>3</ItemPagination>
-				<ItemPagination>4</ItemPagination>
-				<ButtonRight>
-					<img src="./image/icon_arrow.png" width={10} height={10} />
-				</ButtonRight>
-			</Pagination>
+			<PaginationWrapper>
+				<ReactPaginate
+	        previousLabel={<span>&#8592;</span>}
+	        nextLabel={<span>&#8594;</span>}
+	        breakLabel={'...'}
+	        breakClassName={'break-me'}
+	        pageCount={pageCount}
+	        marginPagesDisplayed={2}
+	        pageRangeDisplayed={5}
+	        onPageChange={handlePageClick}
+	        containerClassName={'pagination'}
+	        subContainerClassName={'pages pagination'}
+	        activeClassName={'active'}
+	      />
+			</PaginationWrapper>
 		</ListCheckListsWrapper>
 	)
 }

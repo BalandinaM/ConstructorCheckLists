@@ -1,0 +1,33 @@
+.pagination {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+	align-self: center;
+}
+
+.pagination a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	height: 30px;
+	box-shadow: 1px 2px 3px 0px rgba(0, 62, 100, 0.23);
+	background-color: #fbfbfb;
+	color: #003e64;
+	cursor: pointer;
+}
+
+.pagination a:hover,
+.pagination a:focus {
+	transform: scale(1.1);
+}
+
+.pagination .active a {
+	color: #fbfbfb;
+	background-color: #003e64;
+}
+
+.pagination .disabled a {
+	color: rgba(0, 62, 100, 0.5);
+	pointer-events: none;
+}
