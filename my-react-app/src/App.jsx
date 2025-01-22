@@ -5,7 +5,7 @@ import GlobalStyles from './GlobalStyles';
 import { ThemeProvider } from 'styled-components';
 import theme from './assests/constants/theme';
 import SignUp from './Components/SignUp/SignUp';
-import ListCheckLists from './Components/ListCheckLists/ListCheckLists';
+import ListCheckListsContainer from './Components/ListCheckLists/ListCheckListsContainer';
 import Header from './Components/Header/Header';
 import styled from 'styled-components';
 import FooterPage from './Components/Footer/Footer';
@@ -32,7 +32,7 @@ function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
 						<Route path='/signup'element={<SignUp />}/>
-						<Route path='/list' element={<ListCheckLists />}/>
+						<Route path='/list' element={<ListCheckListsContainer />}/>
 					</Routes>
 					<FooterPage />
 				</BodyContainer>
