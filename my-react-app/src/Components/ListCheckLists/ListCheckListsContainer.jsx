@@ -3,6 +3,7 @@ import "./Pagination.css";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import ListCheckLists from "./ListCheckLists";
+import { NavLink } from "react-router-dom";
 
 const Item = styled.li`
 	width: 100%;
@@ -45,14 +46,16 @@ const ListCheckListsContainer = () => {
 
 	const staticElement = (
 		<ItemStatic key="new-checklist-link">
-			<ImgWrap>
-				<img
-					src="./image/icon_add_1.png"
-					alt="Добавить новую запись"
-					width={70}
-					height={70}
-				/>
-			</ImgWrap>
+			<NavLink to={"/newchecklist"}>
+				<ImgWrap>
+					<img
+						src="./image/icon_add_1.png"
+						alt="Добавить новую запись"
+						width={70}
+						height={70}
+					/>
+				</ImgWrap>
+			</NavLink>
 		</ItemStatic>
 	);
 
