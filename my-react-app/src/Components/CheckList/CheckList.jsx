@@ -1,10 +1,5 @@
-import { Wrapper } from "../../Elements/Wrapper";
+import { Wrap } from "../../Elements/Wrapper";
 import styled from "styled-components";
-
-const Wrap = styled(Wrapper)`
-	display: flex;
-	justify-content: center;
-`
 
 const WrapCheckList = styled.div`
 	width: 740px;

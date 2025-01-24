@@ -12,3 +12,8 @@ export const Wrapper = styled.div`
 	background-color: ${props => props.$bg || null};
 	position: relative; */
 `;
+
+export const Wrap = styled(Wrapper)`
+	display: flex;
+	justify-content: center;
+`;
