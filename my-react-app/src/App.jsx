@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import FooterPage from './Components/Footer/Footer';
 import CheckList from "./Components/CheckList/CheckList";
 import NewCheckList from "./Components/NewCheckList/NewChecklist";
+// import Breadcrumbs from "./Components/Breadcrumbs/Breadcrumbs";
 
 const BodyContainer = styled.div`
 	//width: 1220px;
@@ -30,6 +31,7 @@ function App() {
 				<GlobalStyles />
 				<BodyContainer>
 					<Header	/>
+					{/* <Breadcrumbs /> */}
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />

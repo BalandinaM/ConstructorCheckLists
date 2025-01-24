@@ -3,7 +3,7 @@ import "./Pagination.css";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import ListCheckLists from "./ListCheckLists";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Item = styled.li`
 	width: 100%;
@@ -60,12 +60,14 @@ const ListCheckListsContainer = () => {
 	);
 
 	return (
-		<ListCheckLists
-			currentItems={currentItems}
-			handlePageClick={handlePageClick}
-			pageCount={pageCount}
-			staticElement={staticElement}
-		/>
+		<>
+			<ListCheckLists
+				currentItems={currentItems}
+				handlePageClick={handlePageClick}
+				pageCount={pageCount}
+				staticElement={staticElement}
+			/>
+		</>
 	);
 };
 
