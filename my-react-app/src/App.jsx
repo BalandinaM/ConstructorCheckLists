@@ -9,6 +9,8 @@ import ListCheckListsContainer from './Components/ListCheckLists/ListCheckListsC
 import Header from './Components/Header/Header';
 import styled from 'styled-components';
 import FooterPage from './Components/Footer/Footer';
+import CheckList from "./Components/CheckList/CheckList";
+import NewCheckList from "./Components/NewCheckList/NewChecklist";
 
 const BodyContainer = styled.div`
 	//width: 1220px;
@@ -33,6 +35,8 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path='/signup'element={<SignUp />}/>
 						<Route path='/list' element={<ListCheckListsContainer />}/>
+						<Route path="/checklist/:id" element={<CheckList />}/>
+						<Route path="/newchecklist" element={<NewCheckList />}/>
 					</Routes>
 					<FooterPage />
 				</BodyContainer>
