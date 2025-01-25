@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 const WrapForm = styled.div`
-	background-color: ${props => props.theme.colors.primarySecondary};
+	background-color: ${(props) => props.theme.colors.primarySecondary};
 	box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 	width: 800px;
 	height: auto;
@@ -26,14 +26,18 @@ const InputWrap = styled.div`
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: stretch;
-	gap: ${props => props.$gap || null };
+	gap: ${(props) => props.$gap || null};
 `;
 
 const TextField = styled(Field)`
 	border-radius: 5px;
 	width: 100%;
 	flex-grow: 1;
-	border: 2px solid ${props => props.$isinvalid === 'true' ? props.theme.colors.warning : props.theme.colors.primary};
+	border: 2px solid
+		${(props) =>
+			props.$isinvalid === "true"
+				? props.theme.colors.warning
+				: props.theme.colors.primary};
 `;
 
 const LabelTextField = styled.label`
@@ -42,16 +46,16 @@ const LabelTextField = styled.label`
 `;
 
 const ErrorMessageBox = styled(ErrorMessage)`
-	color: ${props => props.theme.colors.warning};
+	color: ${(props) => props.theme.colors.warning};
 	font-size: 1rem;
 	padding: 0 10px;
 `;
 
 const ButtonSubmit = styled.button`
 	padding: 15px 25px;
-	background-color: ${props => props.theme.colors.primary};
+	background-color: ${(props) => props.theme.colors.primary};
 	font-size: 1.8rem;
-	color: ${props => props.theme.colors.primarySecondary};
+	color: ${(props) => props.theme.colors.primarySecondary};
 	border-radius: 5px;
 	margin-top: auto;
 `;
@@ -109,9 +113,7 @@ const NewCheckList = () => {
 									value={values.description}
 									onChange={handleChange}
 									onBlur={handleBlur}
-									$isinvalid={
-										!!errors.description && !!touched.description
-									}
+									$isinvalid={!!errors.description && !!touched.description}
 								/>
 								<ErrorMessageBox name="description" component="div" />
 							</InputWrap>
