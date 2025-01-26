@@ -60,6 +60,14 @@ const ButtonSubmit = styled.button`
 	color: ${(props) => props.theme.colors.primarySecondary};
 	border-radius: 5px;
 	margin-top: auto;
+
+	&:disabled {
+		opacity: 0.4;
+	}
+
+	&:hover {
+		transform: scale(1.01);
+	}
 `;
 
 const ButtonAddItem = styled(ButtonSubmit)`
@@ -188,14 +196,14 @@ const NewCheckList = () => {
 											<LabelTextField htmlFor="newItem">Название</LabelTextField>
 											<TextField type="text" name="newItem" id="newItem"></TextField>
 										</InputWrap>
-										<ButtonSaveItem>Сохранить</ButtonSaveItem>
+										<ButtonSaveItem type="button">Сохранить</ButtonSaveItem>
 										<ButtonClose onClick={handleCloseDialog}>
 											<img src="./image/icon_close.png" alt="Закрыть" width={30} height={30} />
 										</ButtonClose>
 									</AddItemBoxWrap>
 								</AddItemBox>
 							) : null}
-							<ButtonSubmit type="submit" disabled={isSubmitting}>
+							<ButtonSubmit type="submit" disabled={isSubmitting || isShowDialog}>
 								Сохранить чек-лист
 							</ButtonSubmit>
 						</FormLogin>
