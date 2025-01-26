@@ -74,6 +74,8 @@ const Login = () => {
 								<TextField
 									type="email"
 									name="email"
+									id="email"
+									autocomplete="email"
 									isinvalid={errors.email && touched.email ? "true" : "false"}
 								/>
 								<ErrorMessageBox name="email" component="div" />
@@ -83,13 +85,15 @@ const Login = () => {
 								<TextField
 									type="password"
 									name="password"
+									id="password"
+									autocomplete="current-password"
 									isinvalid={errors.password && touched.password ? "true" : "false"}
 								/>
 								<ErrorMessageBox name="password" component="div" />
 							</InputWrap>
 							<InputWrap $gap="15px">
-								<label htmlFor="rememberme">Запомнить меня</label>
-								<Field type="checkbox" name="rememberMe" />
+								<label htmlFor="rememberMe">Запомнить меня</label>
+								<Field type="checkbox" name="rememberMe" id="rememberMe"/>
 							</InputWrap>
 							<ButtonSubmit type="submit" disabled={isSubmitting}>
 								Авторизоваться

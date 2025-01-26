@@ -154,6 +154,7 @@ const NewCheckList = () => {
 								<TextField
 									type="text"
 									name="titleCheckList"
+									id="titleCheckList"
 									value={values.titleCheckList}
 									onChange={handleChange}
 									onBlur={handleBlur}
@@ -170,6 +171,7 @@ const NewCheckList = () => {
 									rows={3}
 									cols={30}
 									name="description"
+									id="description"
 									value={values.description}
 									onChange={handleChange}
 									onBlur={handleBlur}
@@ -184,7 +186,7 @@ const NewCheckList = () => {
 										<TitleAddItem>Добавить элемент</TitleAddItem>
 										<InputWrap>
 											<LabelTextField htmlFor="newItem">Название</LabelTextField>
-											<TextField type="text" name="newItem"></TextField>
+											<TextField type="text" name="newItem" id="newItem"></TextField>
 										</InputWrap>
 										<ButtonSaveItem>Сохранить</ButtonSaveItem>
 										<ButtonClose onClick={handleCloseDialog}>

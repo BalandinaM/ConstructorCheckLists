@@ -84,6 +84,8 @@ const SignUp = () => {
 								<TextField
 									type="email"
 									name="email"
+									id="email"
+									autocomplete="email"
 									isinvalid={errors.email && touched.email ? "true" : "false"}
 								/>
 								<ErrorMessageBox name="email" component="div" />
@@ -93,6 +95,7 @@ const SignUp = () => {
 								<TextField
 									type="password"
 									name="password"
+									id="password"
 									isinvalid={errors.password && touched.password ? "true" : "false"}
 								/>
 								<ErrorMessageBox name="password" component="div" />
@@ -102,6 +105,7 @@ const SignUp = () => {
 								<TextField
 									type="password"
 									name="confirmPassword"
+									id="confirmPassword"
 									isinvalid={errors.confirmPassword && touched.confirmPassword ? "true" : "false"}
 								/>
 								<ErrorMessageBox name="confirmPassword" component="div" />
