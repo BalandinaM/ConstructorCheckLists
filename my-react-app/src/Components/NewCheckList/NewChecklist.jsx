@@ -1,4 +1,3 @@
-//import { useState, useRef } from "react";
 import styled from "styled-components";
 import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
@@ -37,7 +36,7 @@ const TextField = styled(Field)`
 	flex-grow: 1;
 	border: 2px solid
 		${(props) =>
-			props.$isinvalid === "true"
+			props.$isinvalid === true
 				? props.theme.colors.warning
 				: props.theme.colors.primary};
 `;
@@ -70,7 +69,54 @@ const ButtonSubmit = styled.button`
 	}
 `;
 
+const LabelArrayField = styled.h4`
+	font-size: 1.6rem;
+	padding: 10px 5px;
+	line-height: 1.6;
+	text-align: left;
+`;
+
+const WrapInputTask = styled.div`
+	position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+	margin-bottom: 30px;
+`;
+
+
+const ButtonRemoveTask = styled.button`
+	width: 30px;
+	height: 30px;
+	background-color: ${(props) => props.theme.colors.primary};
+	border-radius: 50%;
+	position: relative;
+	cursor: pointer;
+`;
+
+const Minus = styled.span`
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 5px;
+  background-color: ${(props) => props.theme.colors.primarySecondary};
+`;
+
+const InputTask = styled(TextField)`
+	padding-right: 80px;
+`;
+
+const WrapButtonRemoveTask = styled.div`
+	position: absolute;
+	top: 8px;
+	right: 8px;
+`;
+
 const NewCheckList = () => {
+
 	return (
 		<Wrap>
 			<WrapForm>
@@ -78,13 +124,21 @@ const NewCheckList = () => {
 				<Formik
 					initialValues={{ titleCheckList: "", description: "", tasks: [] }}
 					validationSchema={Yup.object({
-						titleCheckList: Yup.string().required(
-							"Пожалуйста, озаглавьте ваш чек-лист!"
-						),
-						description: Yup.string()
+						titleCheckList: Yup.string()
 							.min(6, "Минимум 6 символов")
-							.max(150, "Максимум 150 символов")
-							.required("Опишите для чего создан чек-лист"),
+							.required("Пожалуйста, озаглавьте ваш чек-лист!"),
+						description: Yup.string()
+							.max(80, "Максимум 80 символов"),
+						tasks: Yup.array()
+							.of(
+								Yup.string().required(
+									"Поле обязательно для заполнения. Если это лишний пункт, удалите его пожалуйста!"
+								)
+							)
+							.ensure(),
+						// .test("not-empty", "Список задач не может быть пустым!", (arr) => arr && arr.length > 0),
+						// проверка на то что массив задач не пустой, но я пока не знаю как вывести сообщение об этом пользователю
+						//поэтому пусть пока повисит закомментированным
 					})}
 					onSubmit={HandleFormSubmit}
 				>
@@ -129,37 +183,43 @@ const NewCheckList = () => {
 								/>
 								<ErrorMessageBox name="description" component="div" />
 							</InputWrap>
+							<LabelArrayField>Задачи</LabelArrayField>
 							<FieldArray
 								name="tasks"
 								render={(arrayHelpers) => (
-									<div>
-										{values.tasks && values.tasks.length > 0 ? (
+									<InputWrap>
+										{values.tasks &&
+											values.tasks.length > 0 &&
 											values.tasks.map((task, index) => (
-												<div key={index}>
-													<TextField name={`tasks.${index}`} />
-													<button
-														type="button"
-														onClick={() => arrayHelpers.remove(index)}
-													>
-														-
-													</button>
-													<button
-														type="button"
-														onClick={() => arrayHelpers.insert(index, "")}
-													>
-														+
-													</button>
-												</div>
-											))
-										) : (
-											<button
-												type="button"
-												onClick={() => arrayHelpers.push("")}
-											>
-												Добавить задачу
-											</button>
-										)}
-									</div>
+												<WrapInputTask key={index}>
+													<InputTask
+														name={`tasks.${index}`}
+														$isinvalid={
+															!!errors?.tasks?.[index] &&
+															!!touched?.tasks?.[index]
+														}
+													/>
+													<WrapButtonRemoveTask>
+														<ButtonRemoveTask
+															type="button"
+															onClick={() => arrayHelpers.remove(index)}
+														>
+															<Minus></Minus>
+														</ButtonRemoveTask>
+													</WrapButtonRemoveTask>
+													<ErrorMessageBox
+														name={`tasks.${index}`}
+														component="div"
+													/>
+												</WrapInputTask>
+											))}
+										<ButtonSubmit
+											type="button"
+											onClick={() => arrayHelpers.push("")}
+										>
+											Добавить задачу
+										</ButtonSubmit>
+									</InputWrap>
 								)}
 							/>
 							<ButtonSubmit type="submit" disabled={isSubmitting}>
