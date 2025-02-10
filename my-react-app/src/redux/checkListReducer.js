@@ -1,4 +1,4 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
 
 const initialState = {
 	checkListsData: [
@@ -411,10 +411,39 @@ const initialState = {
 	],
 };
 
+export const saveNewCheckListAsync = createAsyncThunk(
+	"checklist/saveNewCheckList",
+	async (payload) => {
+		const arrTasks = (payload.tasks).map(task => {
+			return {
+				idTask: nanoid(8),
+				task: task,
+				isDone: false,
+			}
+		})
+		const newCheckList = {
+			id: nanoid(4),
+			title: payload.titleCheckList,
+			description: payload.description,
+			tasksData: arrTasks,
+		}
+
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		return newCheckList;
+	}
+)
+
 export const checkListReducer = createSlice({
 	name: 'checklist',
 	initialState,
+	reducers: {
+	},
+	extraReducers: (builder) => {
+		builder.addCase(saveNewCheckListAsync.fulfilled, (state, action) => {
+			state.checkListsData.push(action.payload);
+		})
+	}
 })
 
-//export const {setUserData, exitProfile} = authReducer.actions;
+export const {saveNewCheckList,} = checkListReducer.actions;
 export default checkListReducer.reducer;

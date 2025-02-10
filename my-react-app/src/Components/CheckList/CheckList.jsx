@@ -3,6 +3,8 @@ import { Wrap } from "../../Elements/Wrapper";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+// import { Formik, Form } from "formik";
+// import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 
 const WrapCheckList = styled.div`
 	background-color: ${(props) => props.theme.colors.primarySecondary};
@@ -34,7 +36,6 @@ const CheckList = () => {
 	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);//получаем массив чеклистов из хранилища
 	const currentCheckList = arrCheckLists.find((item) => item.id === idCheckList);//находим чеклист по ид
 	const tasksData = [...currentCheckList.tasksData];
-	console.log(tasksData)
 
 	const [checked, setChecked] = useState(true);
 
@@ -52,7 +53,7 @@ const CheckList = () => {
 			<WrapCheckList>
 				<TitleCheckList>{currentCheckList.title}</TitleCheckList>
 				<TextCheckList>{currentCheckList.description}</TextCheckList>
-					{tasks}
+				{tasks}
 			</WrapCheckList>
 		</Wrap>
 	);

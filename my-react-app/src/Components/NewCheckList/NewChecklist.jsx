@@ -3,6 +3,9 @@ import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { saveNewCheckListAsync } from "../../redux/checkListReducer";
+import { useNavigate } from "react-router-dom";
 
 const WrapForm = styled.div`
 	background-color: ${(props) => props.theme.colors.primarySecondary};
@@ -116,6 +119,19 @@ const WrapButtonRemoveTask = styled.div`
 `;
 
 const NewCheckList = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const handleAddNewCheckList = (values) => {
+
+		dispatch(saveNewCheckListAsync(values))
+			.then((result) => {
+				navigate(`/checklist/${result.payload.id}`, { state: result.payload.id });
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+	};
 
 	return (
 		<Wrap>
@@ -140,7 +156,10 @@ const NewCheckList = () => {
 						// проверка на то что массив задач не пустой, но я пока не знаю как вывести сообщение об этом пользователю
 						//поэтому пусть пока повисит закомментированным
 					})}
-					onSubmit={HandleFormSubmit}
+					onSubmit={(values, {setSubmitting}) => {
+						HandleFormSubmit(values, {setSubmitting});
+						handleAddNewCheckList(values);
+					}}
 				>
 					{({
 						errors,
