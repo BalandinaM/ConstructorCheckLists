@@ -20,7 +20,7 @@ const initialState = {
 				{
 					idTask: "13",
 					task: "Забронировать отель",
-					isDone: false,
+					isDone: true,
 				},
 				{
 					idTask: "14",

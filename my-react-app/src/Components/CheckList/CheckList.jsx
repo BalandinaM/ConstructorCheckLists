@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Wrap } from "../../Elements/Wrapper";
 import styled from "styled-components";
-import { Formik, Field, Form } from 'formik';
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const WrapCheckList = styled.div`
 	background-color: ${(props) => props.theme.colors.primarySecondary};
@@ -23,85 +25,34 @@ const TextCheckList = styled.p`
 	text-align: justify;
 `;
 
-const FormForCheckbox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 10px;
-	padding-left: 40px;
-`;
 
-const Task = styled.label`
-	display: flex;
-	flex-direction: row;
-	gap: 20px;
-	justify-content: flex-start;
-`;
-
-
-const TaskName = styled.span`
-	font-size: 2.0rem;
-`;
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const CheckList = () => {
+	const params = useParams();
+	const idCheckList = params.id;//получение ид из параметров маршрута
+
+	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);//получаем массив чеклистов из хранилища
+	const currentCheckList = arrCheckLists.find((item) => item.id === idCheckList);//находим чеклист по ид
+	const tasksData = [...currentCheckList.tasksData];
+	console.log(tasksData)
+
+	const [checked, setChecked] = useState(true);
+
+	const tasks = tasksData.map((elem) => {
+		const checkedTask = elem.isDone ? true : false;
+
+		return <label key={elem.idTask}>
+						<input id={elem.idTask} type="checkbox" defaultChecked={checkedTask} onChange={() => setChecked(!checked)}/>
+						{elem.task}
+					</label>
+	})
+
 	return (
 		<Wrap>
 			<WrapCheckList>
-				<TitleCheckList>Я заголовок чеклиста</TitleCheckList>
-				<TextCheckList>
-					Я описание чек листа. Я расскажу о том зачем он создан когда и кем и
-					еще много разной фигни
-				</TextCheckList>
-				{/* <ListTasks>
-				  <Task>
-						<input type="checkbox" />
-						<TaskName htmlFor="">ОЧень важный пункт</TaskName>
-					</Task>
-					<Task>
-						<input type="checkbox" />
-						<TaskName htmlFor="">Нууууу</TaskName>
-					</Task>
-					<Task>
-						<input type="checkbox" />
-						<TaskName htmlFor="">Может и не очень важный</TaskName>
-					</Task>
-				</ListTasks> */}
-				<Formik
-					initialValues={{
-						tasks: [],
-					}}
-					onSubmit={async (values) => {
-						await sleep(500);
-						alert(JSON.stringify(values, null, 2));
-					}}
-				>
-					{() => (
-						<Form>
-							{/* <div id="checkbox-group">Checked</div> */}
-							<FormForCheckbox role="group" aria-labelledby="checkbox-group">
-								<Task>
-									<Field type="checkbox" name="tasks" value="11" />
-									<TaskName>Собрать паспорта</TaskName>
-								</Task>
-								<Task>
-									<Field type="checkbox" name="tasks" value="12" />
-									<TaskName>Взять билеты</TaskName>
-								</Task>
-								<Task>
-									<Field type="checkbox" name="tasks" value="13" />
-									<TaskName>Забронировать отель</TaskName>
-								</Task>
-								<Task>
-									<Field type="checkbox" name="tasks" value="14" />
-									<TaskName>Взять наличку, банковские карты</TaskName>
-								</Task>
-							</FormForCheckbox>
-							<button type="submit">Submit</button>
-						</Form>
-					)}
-				</Formik>
+				<TitleCheckList>{currentCheckList.title}</TitleCheckList>
+				<TextCheckList>{currentCheckList.description}</TextCheckList>
+					{tasks}
 			</WrapCheckList>
 		</Wrap>
 	);
