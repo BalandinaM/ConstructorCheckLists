@@ -437,6 +437,12 @@ export const checkListReducer = createSlice({
 	name: 'checklist',
 	initialState,
 	reducers: {
+		changeIsDone: (state, action) => {
+			const {idCheckList, idTask, statusTask} = action.payload;
+			const parentCheckList = state.checkListsData.find(checkList => checkList.id === idCheckList);
+			const changeTask = parentCheckList.tasksData.find(task => task.idTask === idTask);
+			changeTask.isDone = statusTask;
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(saveNewCheckListAsync.fulfilled, (state, action) => {
@@ -445,5 +451,5 @@ export const checkListReducer = createSlice({
 	}
 })
 
-export const {saveNewCheckList,} = checkListReducer.actions;
+export const {saveNewCheckList, changeIsDone} = checkListReducer.actions;
 export default checkListReducer.reducer;

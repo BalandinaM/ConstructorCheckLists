@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Wrap } from "../../Elements/Wrapper";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeIsDone } from "../../redux/checkListReducer";
 // import { Formik, Form } from "formik";
 // import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 
@@ -48,19 +49,20 @@ const TaskName = styled.span`
 
 const CheckList = () => {
 	const params = useParams();
-	const idCheckList = params.id;//получение ид из параметров маршрута
+	const dispatch = useDispatch();
+	const idCheckList = params.id;
 
-	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);//получаем массив чеклистов из хранилища
-	const currentCheckList = arrCheckLists.find((item) => item.id === idCheckList);//находим чеклист по ид
+	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
+	const currentCheckList = arrCheckLists.find((item) => item.id === idCheckList);
 	const tasksData = [...currentCheckList.tasksData];
 
 	const [checked, setChecked] = useState(true);
 
 	function handleChange(event) {
 		setChecked(!checked);
-		console.log(idCheckList);
-		console.log(event.target.id);
-		console.log(event.target.checked);
+		const idTask = event.target.id;
+		const statusTask =  event.target.checked;
+		dispatch(changeIsDone({idCheckList, idTask, statusTask}))
 	}
 
 	const tasks = tasksData.map((elem) => {
