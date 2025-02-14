@@ -27,7 +27,24 @@ const TextCheckList = styled.p`
 	text-align: justify;
 `;
 
+const TaskList = styled.ul`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	padding-left: 40px;
+`;
 
+const Task = styled.label`
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: flex-start;
+`;
+
+const TaskName = styled.span`
+	font-size: 2.0rem;
+`;
 
 const CheckList = () => {
 	const params = useParams();
@@ -39,13 +56,24 @@ const CheckList = () => {
 
 	const [checked, setChecked] = useState(true);
 
+	function handleChange(event) {
+		setChecked(!checked);
+		console.log(idCheckList);
+		console.log(event.target.id);
+		console.log(event.target.checked);
+	}
+
 	const tasks = tasksData.map((elem) => {
 		const checkedTask = elem.isDone ? true : false;
 
-		return <label key={elem.idTask}>
-						<input id={elem.idTask} type="checkbox" defaultChecked={checkedTask} onChange={() => setChecked(!checked)}/>
-						{elem.task}
-					</label>
+		return (
+					<li key={elem.idTask}>
+						<Task>
+							<input id={elem.idTask} type="checkbox" defaultChecked={checkedTask} onChange={handleChange}/>
+							<TaskName>{elem.task}</TaskName>
+						</Task>
+					</li>
+		)
 	})
 
 	return (
@@ -53,7 +81,9 @@ const CheckList = () => {
 			<WrapCheckList>
 				<TitleCheckList>{currentCheckList.title}</TitleCheckList>
 				<TextCheckList>{currentCheckList.description}</TextCheckList>
-				{tasks}
+				<TaskList>
+					{tasks}
+				</TaskList>
 			</WrapCheckList>
 		</Wrap>
 	);
