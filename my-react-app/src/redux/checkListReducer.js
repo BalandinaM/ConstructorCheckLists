@@ -6,6 +6,7 @@ const initialState = {
 			id: "1",
 			title: "Подготовка документов",
 			description: "Какие документы необходимо подготовить или проверить наличие, перед поездкой",
+			public: true,
 			tasksData: [
 				{
 					idTask: "11",
@@ -33,6 +34,7 @@ const initialState = {
 			id: "2",
 			title: "Сбор багажа",
 			description: "Что положить в чемоданы",
+			public: false,
 			tasksData: [
 				{
 					idTask: "21",
@@ -65,6 +67,7 @@ const initialState = {
 			id: "3",
 			title: "Выход из дома",
 			description: "Что необходимо проверить непосредственно перед выходом из дома на такси",
+			public: false,
 			tasksData: [
 				{
 					idTask: "31",
@@ -92,6 +95,7 @@ const initialState = {
 			id: "4",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "41",
@@ -124,6 +128,7 @@ const initialState = {
 			id: "5",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "51",
@@ -156,6 +161,7 @@ const initialState = {
 			id: "6",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "61",
@@ -188,6 +194,7 @@ const initialState = {
 			id: "7",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "71",
@@ -220,6 +227,7 @@ const initialState = {
 			id: "8",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "81",
@@ -252,6 +260,7 @@ const initialState = {
 			id: "9",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "91",
@@ -284,6 +293,7 @@ const initialState = {
 			id: "10",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "101",
@@ -316,6 +326,7 @@ const initialState = {
 			id: "11",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "111",
@@ -348,6 +359,7 @@ const initialState = {
 			id: "12",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "121",
@@ -380,6 +392,7 @@ const initialState = {
 			id: "13",
 			title: "Прочее важное перед отъездом",
 			description: "По мелочи, но ОЧЕНЬ важно",
+			public: false,
 			tasksData: [
 				{
 					idTask: "131",
@@ -425,6 +438,7 @@ export const saveNewCheckListAsync = createAsyncThunk(
 			id: nanoid(4),
 			title: payload.titleCheckList,
 			description: payload.description,
+			public: payload.public,
 			tasksData: arrTasks,
 		}
 

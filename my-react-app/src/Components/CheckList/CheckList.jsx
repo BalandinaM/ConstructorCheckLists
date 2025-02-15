@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeIsDone } from "../../redux/checkListReducer";
-// import { Formik, Form } from "formik";
-// import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 
 const WrapCheckList = styled.div`
 	background-color: ${(props) => props.theme.colors.primarySecondary};
@@ -20,6 +18,9 @@ const WrapCheckList = styled.div`
 const TitleCheckList = styled.h3`
 	font-size: 2em;
 	margin-bottom: 30px;
+	display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 const TextCheckList = styled.p`
@@ -46,6 +47,11 @@ const Task = styled.label`
 const TaskName = styled.span`
 	font-size: 2.0rem;
 `;
+
+const InfoPublic = styled.span`
+	font-size: 1.3rem;
+	opacity: 0.6;
+`
 
 const CheckList = () => {
 	const params = useParams();
@@ -81,7 +87,9 @@ const CheckList = () => {
 	return (
 		<Wrap>
 			<WrapCheckList>
-				<TitleCheckList>{currentCheckList.title}</TitleCheckList>
+				<TitleCheckList>{currentCheckList.title}
+					{currentCheckList.public && <InfoPublic>Виден всем пользователям</InfoPublic>}
+				</TitleCheckList>
 				<TextCheckList>{currentCheckList.description}</TextCheckList>
 				<TaskList>
 					{tasks}

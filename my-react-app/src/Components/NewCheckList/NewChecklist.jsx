@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
@@ -121,6 +122,11 @@ const WrapButtonRemoveTask = styled.div`
 const NewCheckList = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [checked, setChecked] = useState(false);
+
+	const handleChangePublic = () => {
+		setChecked(!checked)
+	};
 
 	const handleAddNewCheckList = (values) => {
 
@@ -138,13 +144,14 @@ const NewCheckList = () => {
 			<WrapForm>
 				<h2>Новый чек-лист</h2>
 				<Formik
-					initialValues={{ titleCheckList: "", description: "", tasks: [] }}
+					initialValues={{ titleCheckList: "", description: "", public: false, tasks: [] }}
 					validationSchema={Yup.object({
 						titleCheckList: Yup.string()
 							.min(6, "Минимум 6 символов")
 							.required("Пожалуйста, озаглавьте ваш чек-лист!"),
 						description: Yup.string()
 							.max(80, "Максимум 80 символов"),
+						public: Yup.boolean(),
 						tasks: Yup.array()
 							.of(
 								Yup.string().required(
@@ -170,6 +177,10 @@ const NewCheckList = () => {
 						values,
 					}) => (
 						<FormLogin>
+							<InputWrap>
+								<LabelTextField htmlFor="public">Виден всем пользователям</LabelTextField>
+								<Field type="checkbox" name="public"/>
+							</InputWrap>
 							<InputWrap>
 								<LabelTextField htmlFor="titleCheckList">
 									Название чек-листа
