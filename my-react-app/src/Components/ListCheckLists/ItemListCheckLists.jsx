@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Item = styled.li`
+	position: relative;
 	width: 100%;
 	padding: 15px;
 	aspect-ratio: 1 / 1;
@@ -10,12 +11,11 @@ const Item = styled.li`
 `;
 
 const NavLinkCustom = styled(NavLink)`
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 16px;
+	padding: 2px 15px;
+
+	&:hover {
+		scale: 1.2;
+	}
 `;
 
 const ItemTitle = styled.h3`
@@ -27,14 +27,45 @@ const ItemText = styled.p`
 	flex-grow: 1;
 `;
 
+const Popup = styled.div`
+	position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+	height: 100%;
+  padding: 10px;
+  background-color: ${(props) => props.theme.colors.primarySecondary};
+  color: ${(props) => props.theme.colors.primary};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+	gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 
-const ItemListCheckLists = ({elem}) => {
+  ${Item}:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
+`
+
+
+const ItemListCheckLists = ({ elem }) => {
 	return (
 		<Item key={elem.id}>
-			<NavLinkCustom to={`/checklist/${elem.id}`}>
-				<ItemTitle>{elem.title}</ItemTitle>
-				<ItemText>{elem.description}</ItemText>
-			</NavLinkCustom>
+			<ItemTitle>{elem.title}</ItemTitle>
+			<ItemText>{elem.description}</ItemText>
+			<Popup>
+				<NavLinkCustom to={`/checklist/${elem.id}`}>Посмотреть</NavLinkCustom>
+				<NavLinkCustom to={`/checklist/${elem.id}/edit`}>
+					Редактировать
+				</NavLinkCustom>
+				<NavLinkCustom to={`/checklist/${elem.id}/delete`}>
+					Удалить
+				</NavLinkCustom>
+			</Popup>
 		</Item>
 	);
 };
