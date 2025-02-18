@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
@@ -122,11 +121,6 @@ const WrapButtonRemoveTask = styled.div`
 const NewCheckList = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	// const [checked, setChecked] = useState(false);
-
-	// const handleChangePublic = () => {
-	// 	setChecked(!checked)
-	// };
 
 	const handleAddNewCheckList = (values) => {
 

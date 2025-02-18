@@ -51,7 +51,6 @@ const IconWrap = styled.div`
 `;
 
 const ImgWrap = styled(IconWrap)`
-	//margin-right: ${(props) => (props.$authToken === "true" ? "auto" : null )};
 	margin-right: 20px;
 `;
 

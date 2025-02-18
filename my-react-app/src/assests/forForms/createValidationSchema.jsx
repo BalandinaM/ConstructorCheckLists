@@ -11,11 +11,6 @@ export const createValidationSchema = (fields) => {
       } else if (field === 'rememberMe') {
         schema[field] = Yup.boolean();
 			}
-      // } else if (field === 'name') {
-      //   schema[field] = Yup.string().required('Обязательно').max(50, "Поле превышает максимальную длину в 50 символов");
-      // } else if (field === 'success') {
-      //   schema[field] = Yup.string().max(200, "Поле превышает максимальную длину в 200 символов").required();
-      // }
     });
 
     return Yup.object(schema);

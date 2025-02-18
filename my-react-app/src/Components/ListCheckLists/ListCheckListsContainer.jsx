@@ -46,14 +46,12 @@ const ListCheckListsContainer = () => {
 
 	const handleDeleteClick = (id) => {
 		if (window.confirm(`Вы уверены, что хотите удалить этот чек-лист?`)) {
-			//alert(`Удаление чеклиста ${id}`);
 			dispatch(deleteCheckList(id));
 		}
 	};
 
 	const handleEditClick = (id) => {
 		if (window.confirm(`Вы уверены, что хотите отредактировать этот чек-лист? Внесение изменений приведет к сбросу всех выполненных задач.`)) {
-			//alert(`Удаление чеклиста ${id}`);
 			navigate(`/checklist/${id}/edit`);
 		}
 	};

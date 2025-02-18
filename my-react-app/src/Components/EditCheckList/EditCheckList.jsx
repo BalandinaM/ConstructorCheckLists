@@ -1,11 +1,10 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { saveNewCheckListAsync, updateCheckListAsync } from "../../redux/checkListReducer";
+import { updateCheckListAsync } from "../../redux/checkListReducer";
 import { useNavigate, useParams } from "react-router-dom";
 
 const WrapForm = styled.div`
