@@ -25,8 +25,6 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 		margin: 0;
-  	/* display: flex;
-  	place-items: center; */
   	min-width: 320px;
   	min-height: 100vh;
   }
@@ -34,12 +32,7 @@ const GlobalStyles = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     line-height: 1.2;
-    /* margin-bottom: 1.6rem; */
   }
-
-  /* p {
-    margin-bottom: 1.6rem;
-  } */
 
   a {
     text-decoration: none;

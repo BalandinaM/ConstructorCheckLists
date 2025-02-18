@@ -12,10 +12,8 @@ import FooterPage from './Components/Footer/Footer';
 import CheckList from "./Components/CheckList/CheckList";
 import NewCheckList from "./Components/NewCheckList/NewChecklist";
 import EditCheckList from "./Components/EditCheckList/EditCheckList";
-// import Breadcrumbs from "./Components/Breadcrumbs/Breadcrumbs";
 
 const BodyContainer = styled.div`
-	//width: 1220px;
 	min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -32,7 +30,6 @@ function App() {
 				<GlobalStyles />
 				<BodyContainer>
 					<Header	/>
-					{/* <Breadcrumbs /> */}
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
