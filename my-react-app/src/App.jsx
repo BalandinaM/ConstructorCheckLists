@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import FooterPage from './Components/Footer/Footer';
 import CheckList from "./Components/CheckList/CheckList";
 import NewCheckList from "./Components/NewCheckList/NewChecklist";
+import EditCheckList from "./Components/EditCheckList/EditCheckList";
 // import Breadcrumbs from "./Components/Breadcrumbs/Breadcrumbs";
 
 const BodyContainer = styled.div`
@@ -38,6 +39,7 @@ function App() {
 						<Route path='/signup'element={<SignUp />}/>
 						<Route path='/list' element={<ListCheckListsContainer />}/>
 						<Route path="/checklist/:id" element={<CheckList />}/>
+						<Route path="/checklist/:id/edit" element={<EditCheckList/>}/>
 						<Route path="/newchecklist" element={<NewCheckList />}/>
 					</Routes>
 					<FooterPage />

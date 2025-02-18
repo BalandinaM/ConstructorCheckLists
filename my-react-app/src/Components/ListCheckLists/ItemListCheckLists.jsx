@@ -14,7 +14,7 @@ const NavLinkCustom = styled(NavLink)`
 	padding: 2px 15px;
 
 	&:hover {
-		scale: 1.2;
+		scale: 1.1;
 	}
 `;
 
@@ -52,17 +52,27 @@ const Popup = styled.div`
 `
 
 
-const ItemListCheckLists = ({ elem }) => {
+const ItemListCheckLists = ({ elem, handleDeleteClick, handleEditClick }) => {
 	return (
 		<Item key={elem.id}>
 			<ItemTitle>{elem.title}</ItemTitle>
 			<ItemText>{elem.description}</ItemText>
 			<Popup>
 				<NavLinkCustom to={`/checklist/${elem.id}`}>Посмотреть</NavLinkCustom>
-				<NavLinkCustom to={`/checklist/${elem.id}/edit`}>
+				<NavLinkCustom
+					to="#"
+					onClick={(e) => {
+						e.preventDefault();
+						if (elem.id) {
+							handleEditClick(elem.id);
+						} else {
+							console.error("ID элемента не определён");
+						}
+					}}
+				>
 					Редактировать
 				</NavLinkCustom>
-				<NavLinkCustom to={`/checklist/${elem.id}/delete`}>
+				<NavLinkCustom onClick={() => handleDeleteClick(elem.id)}>
 					Удалить
 				</NavLinkCustom>
 			</Popup>

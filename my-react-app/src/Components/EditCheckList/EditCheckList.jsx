@@ -4,9 +4,9 @@ import { Wrap } from "../../Elements/Wrapper";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { HandleFormSubmit } from "../../assests/forForms/handleFormSubmit";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { saveNewCheckListAsync } from "../../redux/checkListReducer";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { saveNewCheckListAsync, updateCheckListAsync } from "../../redux/checkListReducer";
+import { useNavigate, useParams } from "react-router-dom";
 
 const WrapForm = styled.div`
 	background-color: ${(props) => props.theme.colors.primarySecondary};
@@ -82,13 +82,12 @@ const LabelArrayField = styled.h4`
 
 const WrapInputTask = styled.div`
 	position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 	margin-bottom: 30px;
 `;
-
 
 const ButtonRemoveTask = styled.button`
 	width: 30px;
@@ -101,12 +100,12 @@ const ButtonRemoveTask = styled.button`
 
 const Minus = styled.span`
 	position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 5px;
-  background-color: ${(props) => props.theme.colors.primarySecondary};
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
+	height: 5px;
+	background-color: ${(props) => props.theme.colors.primarySecondary};
 `;
 
 const InputTask = styled(TextField)`
@@ -119,53 +118,51 @@ const WrapButtonRemoveTask = styled.div`
 	right: 8px;
 `;
 
-const NewCheckList = () => {
+const EditCheckList = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	// const [checked, setChecked] = useState(false);
+	const params = useParams();
+	const idCheckList = params.id;
+	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
+	const currentCheckList = arrCheckLists.find((item) => item.id === idCheckList);
 
-	// const handleChangePublic = () => {
-	// 	setChecked(!checked)
-	// };
 
-	const handleAddNewCheckList = (values) => {
+	const tasks = currentCheckList.tasksData;
 
-		dispatch(saveNewCheckListAsync(values))
+	const handleEditCheckList = (values) => {
+		dispatch(updateCheckListAsync(values))
 			.then((result) => {
-				navigate(`/checklist/${result.payload.id}`, { state: result.payload.id });
+				navigate(`/checklist/${result.payload.id}`, {
+					state: result.payload.id,
+				});
 			})
 			.catch((error) => {
 				console.error(error);
-			})
+			});
 	};
 
 	return (
 		<Wrap>
 			<WrapForm>
-				<h2>Новый чек-лист</h2>
+				<h2>Редактировать чек-лист</h2>
 				<Formik
-					initialValues={{ titleCheckList: "", description: "", public: false, tasks: [] }}
+					initialValues={{
+						id: idCheckList,
+						title: currentCheckList.title,
+						description: currentCheckList.description,
+						public: currentCheckList.public,
+						tasksData: [...tasks],
+					}}
 					validationSchema={Yup.object({
-						titleCheckList: Yup.string()
+						title: Yup.string()
 							.min(6, "Минимум 6 символов")
 							.required("Пожалуйста, озаглавьте ваш чек-лист!"),
-						description: Yup.string()
-							.max(80, "Максимум 80 символов"),
+						description: Yup.string().max(80, "Максимум 80 символов"),
 						public: Yup.boolean(),
-						tasks: Yup.array()
-							.of(
-								Yup.string().required(
-									"Поле обязательно для заполнения. Если это лишний пункт, удалите его пожалуйста!"
-								)
-							)
-							.ensure(),
-						// .test("not-empty", "Список задач не может быть пустым!", (arr) => arr && arr.length > 0),
-						// проверка на то что массив задач не пустой, но я пока не знаю как вывести сообщение об этом пользователю
-						//поэтому пусть пока повисит закомментированным
 					})}
-					onSubmit={(values, {setSubmitting}) => {
-						HandleFormSubmit(values, {setSubmitting});
-						handleAddNewCheckList(values);
+					onSubmit={(values, { setSubmitting }) => {
+						HandleFormSubmit(values, { setSubmitting });
+						handleEditCheckList(values);
 					}}
 				>
 					{({
@@ -178,25 +175,27 @@ const NewCheckList = () => {
 					}) => (
 						<FormLogin>
 							<InputWrap>
-								<LabelTextField htmlFor="public">Виден всем пользователям</LabelTextField>
-								<Field type="checkbox" name="public"/>
+								<LabelTextField htmlFor="public">
+									Виден всем пользователям
+								</LabelTextField>
+								<Field type="checkbox" name="public" />
 							</InputWrap>
 							<InputWrap>
-								<LabelTextField htmlFor="titleCheckList">
+								<LabelTextField htmlFor="title">
 									Название чек-листа
 								</LabelTextField>
 								<TextField
 									type="text"
-									name="titleCheckList"
-									id="titleCheckList"
-									value={values.titleCheckList}
+									name="title"
+									id="title"
+									value={values.title}
 									onChange={handleChange}
 									onBlur={handleBlur}
 									$isinvalid={
-										!!errors.titleCheckList && !!touched.titleCheckList
+										!!errors.title && !!touched.title
 									}
 								/>
-								<ErrorMessageBox name="titleCheckList" component="div" />
+								<ErrorMessageBox name="title" component="div" />
 							</InputWrap>
 							<InputWrap>
 								<LabelTextField htmlFor="description">Описание</LabelTextField>
@@ -215,18 +214,18 @@ const NewCheckList = () => {
 							</InputWrap>
 							<LabelArrayField>Задачи</LabelArrayField>
 							<FieldArray
-								name="tasks"
+								name="tasksData"
 								render={(arrayHelpers) => (
 									<InputWrap>
-										{values.tasks &&
-											values.tasks.length > 0 &&
-											values.tasks.map((task, index) => (
+										{values.tasksData &&
+											values.tasksData.length > 0 &&
+											values.tasksData.map((task, index) => (
 												<WrapInputTask key={index}>
 													<InputTask
-														name={`tasks.${index}`}
+														name={`tasksData[${index}].task`}
 														$isinvalid={
-															!!errors?.tasks?.[index] &&
-															!!touched?.tasks?.[index]
+															!!errors?.tasksData?.[index] &&
+															!!touched?.tasksData?.[index]
 														}
 													/>
 													<WrapButtonRemoveTask>
@@ -238,7 +237,7 @@ const NewCheckList = () => {
 														</ButtonRemoveTask>
 													</WrapButtonRemoveTask>
 													<ErrorMessageBox
-														name={`tasks.${index}`}
+														name={`tasksData.${index}`}
 														component="div"
 													/>
 												</WrapInputTask>
@@ -263,4 +262,4 @@ const NewCheckList = () => {
 	);
 };
 
-export default NewCheckList;
+export default EditCheckList;

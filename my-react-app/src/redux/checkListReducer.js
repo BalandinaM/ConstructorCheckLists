@@ -447,6 +447,44 @@ export const saveNewCheckListAsync = createAsyncThunk(
 	}
 )
 
+export const updateCheckListAsync = createAsyncThunk(
+	"checklist/updateCheckList",
+	async (values, thunkAPI) => {
+		const state = thunkAPI.getState();
+		const checkListToUpdate = state.checklist.checkListsData.find(
+			(checkList) => checkList.id === values.id
+		);
+
+		if (!checkListToUpdate) {
+			return console.error("не найден элемент с таким id");
+		}
+
+		const updatedCheckList = { ...checkListToUpdate };
+		Object.keys(values).forEach((key) => {
+			checkListToUpdate[key];
+			if (values[key] !== checkListToUpdate[key]) {
+				updatedCheckList[key] = values[key];
+			}
+		});
+
+		if (updatedCheckList.tasksData && Array.isArray(updatedCheckList.tasksData)) {
+			updatedCheckList.tasksData = updatedCheckList.tasksData.map((task) => {
+				if (!task.idTask) {
+					task.idTask = nanoid(8);
+				}
+				if (!task.isDone) {
+					task.isDone = false;
+				}
+				if (task.isDone === true) {
+					task.isDone = false;
+				}
+				return task;
+			});
+		}
+		return updatedCheckList;
+	}
+);
+
 export const checkListReducer = createSlice({
 	name: 'checklist',
 	initialState,
@@ -456,14 +494,24 @@ export const checkListReducer = createSlice({
 			const parentCheckList = state.checkListsData.find(checkList => checkList.id === idCheckList);
 			const changeTask = parentCheckList.tasksData.find(task => task.idTask === idTask);
 			changeTask.isDone = statusTask;
-		}
+		},
+		deleteCheckList: (state, action) => {
+			const id = action.payload;
+			state.checkListsData = state.checkListsData.filter((item) => item.id !== id );
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(saveNewCheckListAsync.fulfilled, (state, action) => {
 			state.checkListsData.push(action.payload);
+		});
+		builder.addCase(updateCheckListAsync.fulfilled, (state, action) => {
+			const index = state.checkListsData.findIndex(checkList => checkList.id === action.payload.id);
+			if (index >= 0) {
+				state.checkListsData[index] = action.payload;
+			}
 		})
 	}
 })
 
-export const {saveNewCheckList, changeIsDone} = checkListReducer.actions;
+export const {saveNewCheckList, changeIsDone, updateCheckList, deleteCheckList} = checkListReducer.actions;
 export default checkListReducer.reducer;

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "./Pagination.css";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ListCheckLists from "./ListCheckLists";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink} from "react-router-dom";
+import { deleteCheckList } from "../../redux/checkListReducer";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled.li`
 	width: 100%;
@@ -32,12 +34,28 @@ const ImgWrap = styled.div`
 `;
 
 const ListCheckListsContainer = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const arrCheckLists = useSelector((state) => state.checklist.checkListsData);
 	const [currentPage, setCurrentPage] = useState(0);
 	const pageSize = 11;
 
 	const handlePageClick = ({ selected }) => {
 		setCurrentPage(selected);
+	};
+
+	const handleDeleteClick = (id) => {
+		if (window.confirm(`Вы уверены, что хотите удалить этот чек-лист?`)) {
+			//alert(`Удаление чеклиста ${id}`);
+			dispatch(deleteCheckList(id));
+		}
+	};
+
+	const handleEditClick = (id) => {
+		if (window.confirm(`Вы уверены, что хотите отредактировать этот чек-лист? Внесение изменений приведет к сбросу всех выполненных задач.`)) {
+			//alert(`Удаление чеклиста ${id}`);
+			navigate(`/checklist/${id}/edit`);
+		}
 	};
 
 	const offset = currentPage * pageSize;
@@ -66,6 +84,8 @@ const ListCheckListsContainer = () => {
 				handlePageClick={handlePageClick}
 				pageCount={pageCount}
 				staticElement={staticElement}
+				handleDeleteClick={handleDeleteClick}
+				handleEditClick={handleEditClick}
 			/>
 		</>
 	);

@@ -28,6 +28,8 @@ const ListCheckLists = ({
 	handlePageClick,
 	pageCount,
 	staticElement,
+	handleDeleteClick,
+	handleEditClick
 }) => {
 	return (
 		<ListCheckListsWrapper>
@@ -35,7 +37,7 @@ const ListCheckLists = ({
 			<List>
 				{[staticElement].concat(
 					currentItems.map((elem) => (
-						<ItemListCheckLists elem={elem} key={elem.id}/>
+						<ItemListCheckLists elem={elem} key={elem.id} handleDeleteClick={handleDeleteClick} handleEditClick={handleEditClick}/>
 					))
 				)}
 			</List>
