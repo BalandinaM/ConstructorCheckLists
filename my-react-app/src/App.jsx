@@ -19,7 +19,6 @@ const BodyContainer = styled.div`
   flex-direction: column;
 	margin: 0 auto;
 	text-align: center;
-	outline: 5px solid red;
 `
 
 function App() {
